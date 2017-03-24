@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Example - Infinite scroller</title>
+  <script src="../node_modules/vue/dist/vue.min.js"></script>
+  <style>
+    body {
+      background-color: rgba(182, 189, 193, 0.6);
+    }
+    
+    #app {
+      padding: 20px 0;
+    }
+    
+    .contents {
+      width: 750px;
+      margin: 0 auto;
+    }
+    
+    .list {
+      list-style: none;
+    }
+    
+    .item {
+      height: 150px;
+      padding: 0 10px;
+      font-size: 14px;
+      line-height: 40px;
+      color: #666;
+      background-color: #fafafa;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #e3e3e3;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="contents">
+      <ol class="list">
+        <li class="item" v-for="item in list">
+          <h3>{{ item.name }} -> {{ item.count }} </h3>
+        </li>
+      </ol>
+    </div>
+    <infinite-scroller
+      :on-load="onLoad"
+      :distance="distance"
+      ref="infiniteScroller"
+      :contents-color="'rgba(65, 132, 225, .8)'"
+      :prompt-color="'rgba(234, 9, 127, .8)'"
+    />
+    <h1 slot="contents">Render anything you wants</h1>
+    <p slot="no-more">No more data</p>
+  </div>
+  
+  <script src="../dist/infinite-scroller.js"></script>
+  <script>
+    var names = [
+      "天翊",
+      "凱瑞",
+      "健雄",
+      "耀傑",
+      "瀟然",
+      "子涵",
+      "越彬",
+      "鈺軒",
+      "智輝",
+      "致遠",
+      "俊馳",
+      "雨澤",
+      "燁磊",
+      "晟睿",
+      "文昊",
+      "修潔",
+      "黎昕",
+      "遠航",
+      "旭堯",
+      "鴻濤",
+      "偉祺",
+      "榮軒",
+      "越澤",
+      "浩宇",
+      "瑾瑜",
+      "皓軒",
+      "擎蒼",
+      "擎宇",
+      "志澤",
+    ];
+    const generateMockDate = times => [...Array(times)].map(() => 
+      (
+        {
+          name: names.pop(),
+          count: Math.floor(Math.random() * 5) + 9487
+        }
+      ));
+    new Vue({
+      el: '#app',
+      data: {
+        distance: 100,
+        list: generateMockDate(8)
+      },
+      methods: {
+        onLoad() {
+          if (this.list.length > 10) {
+            this.$refs.infiniteScroller.$emit('infinite-scroller-complete');
+          } else {
+            setTimeout(() => {
+              this.list.push(generateMockDate(1).pop());
+              this.$refs.infiniteScroller.$emit('infinite-scroller-loaded');
+            }, 2000);
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>
