@@ -2,8 +2,11 @@
   "name": "infinite-scroller",
   "version": "0.1.0",
   "description": "An infinite scroller component for Vue.js",
-  "main": "index.js",
+  "main": "dist/infinite-scroller.js",
   "scripts": {
+    "clear": "rm -rf ./node_modules && npm cache clean",
+    "build": "cross-env NODE_ENV=production webpack --progress",
+    "lint": "eslint ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
