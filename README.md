@@ -1,6 +1,8 @@
 # Infinite Scroller
 A infinite scroll component for Vue.js.
 
+[![Build Status](https://travis-ci.org/jasperck/infinite-scroller.svg?branch=master)](https://travis-ci.org/jasperck/infinite-scroller)
+
 ## Usage
 
 **basic**
